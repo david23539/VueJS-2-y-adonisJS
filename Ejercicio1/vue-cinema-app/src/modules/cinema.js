@@ -11,7 +11,13 @@ const state = {
   }
 };
 const actions = {
-
+  [types.actions.fetchCinemas]: ({commit}) => {
+    commit(globalTypes.mutations.startProcessing);
+    Vue.http.get('cinemas').then(cinemas => {
+      commit(types.mutations.receivedCinemas, {apiResponse: cinemas});
+      commit(globalTypes.mutations.stopProcessing);
+    })
+  }
 };
 
 const getters = {
@@ -19,7 +25,10 @@ const getters = {
 };
 
 const mutations = {
-
+  [type.mutations.receivedCinemas]: (state, {apiResponse}) => {
+    state.cinemas = apiResponse.data;
+  }
+  
 };
 
 export default {
