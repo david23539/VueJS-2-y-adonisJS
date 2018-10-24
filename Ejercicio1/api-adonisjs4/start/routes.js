@@ -32,4 +32,4 @@ Route.group(()=> {
   Route.get('booking/last','BookingController.last').middleware(['auth:jwt']);
   Route.get('booking/all','BookingController.all').middleware(['auth:jwt']);
 
-}).prefix('app/v1');
+}).prefix('api/v1/');

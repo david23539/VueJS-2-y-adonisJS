@@ -8,29 +8,29 @@ class AuthController {
     return response.json(logged);
   }
 
-  async register ({req, res}) {
+  async register ({request, response}) {
     const userInstance = new User();
-    const { user } = req.all();
+    const { user } = request.all();
 
-    userInstance.username = user.email;
+    userInstance.username = user.username;
     userInstance.email = user.email;
     userInstance.password = user.password;
 
     await userInstance.save();
-    return res.json(userInstance);
+    return response.json(userInstance);
   }
 
-  async profile ( {req, res, auth}) {
+  async profile ( {request, response, auth}) {
     let user = await auth.getUser();
-    const userInput = req.input('user');
+    const userInput = request.input('user');
     user.email = userInput['email'];
     user.username = userInput['username'];
     await user.save();
 
     const logged = await auth.generate(user, true);
-    return res.json(logged);
+    return response.json(logged);
   }
 
 }
 
-module.exports = AuthController
+module.exports = AuthController;

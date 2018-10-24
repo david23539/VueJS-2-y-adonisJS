@@ -1,7 +1,7 @@
 import namespace from '@/utils/namespaces';
 
 export default namespace('global', {
-  action: [
+  actions: [
     'changeLanguage'
   ],
   getters: [
