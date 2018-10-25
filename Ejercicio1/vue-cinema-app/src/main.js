@@ -28,6 +28,7 @@ Vue.use(BlockUI);
 import globalTypes from '@/types/global';
 import authModule from '@/modules/auth';
 import cinemaModule from '@/modules/cinema';
+import movieModule from '@/modules/movie';
  //Modulos y tipos
 
 //vee-validate
@@ -87,7 +88,8 @@ export const store = new Vuex.Store({
   },
   modules: {
     authModule,
-    cinemaModule
+    cinemaModule,
+    movieModule
   }
 });
 //global store

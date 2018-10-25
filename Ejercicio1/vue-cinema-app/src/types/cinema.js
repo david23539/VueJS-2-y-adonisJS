@@ -14,6 +14,7 @@ export default namespace('cinema', {
     'receivedCinemas',
     'setSearch',
     'setRooms',
+    'setSeats',
     'clearFilter'
   ]
 })

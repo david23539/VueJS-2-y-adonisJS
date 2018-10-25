@@ -11,6 +11,7 @@ import {store} from '@/main';
 //components
 import Login from '@/components/Auth/Login';
 import Register from '@/components/Auth/Register';
+import Cinema from '@/components/Cinema/cinema';
 //components
 
 //configurar router
@@ -33,7 +34,9 @@ const router = new Router({
           next();
         }
       }
-    }
+    },
+    {path: '/', name:'cinema', component:Cinema, meta:{Auth:false, title:'Cines'},
+    },
   ]
 });
 //configurar router
