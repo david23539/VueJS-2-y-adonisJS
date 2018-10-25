@@ -12,7 +12,7 @@ export default namespace ('movie', {
   ],
   actions: [
     'fetchMovies',
-    "fetchGenres"
+    'fetchGenres'
   ],
   mutations:[
     'receivedMovies',

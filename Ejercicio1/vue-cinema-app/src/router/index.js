@@ -12,6 +12,7 @@ import {store} from '@/main';
 import Login from '@/components/Auth/Login';
 import Register from '@/components/Auth/Register';
 import Cinema from '@/components/Cinema/cinema';
+import Movies from '@/components/Movie/movie';
 //components
 
 //configurar router
@@ -35,8 +36,11 @@ const router = new Router({
         }
       }
     },
-    {path: '/', name:'cinema', component:Cinema, meta:{Auth:false, title:'Cines'},
+    {path: '/', name:'cinemas', component:Cinema, meta:{Auth:false, title:'Cines'},
     },
+    {path: '/cinema/:id', name:'cinema', component:Movies, meta:{Auth:false, title:'Listado de Peliculas'},
+    },
+
   ]
 });
 //configurar router

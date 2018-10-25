@@ -5,15 +5,15 @@ const moment = require('moment');
 
 class MovieController {
 
-  async byCinema({response, params}) {
-    const cinema = await Cinema.find(params.id);
+  async byCinema ({response, params}) {
+    const cinema = await Cinema.find(params.cinemaId);
     await cinema.loadMany({
-      movie_showings: (movie_showing)=>{
+      movie_showings: (movie_showing) => {
         movie_showing
-          .select('id','moview_id', 'romm_id')
-          .where('moview_show_date', moment(new Date()).format('YYYY-MM-DD'))
-          .with('movie_showing_times', (moview_showing_time)=> {
-            moview_showing_time.where('hour_to_show', '>=', new Date().getHours())
+          .select('id', 'movie_id', 'room_id')
+          .where('movie_show_date', moment(new Date()).format("YYYY-MM-DD"))
+          .with('movie_showing_times', (movie_showing_time) => {
+            movie_showing_time.where('hour_to_show', '>=', new Date().getHours())
           })
           .with('movie', (movie) => {
             movie.with('genres', (genres) => {
@@ -23,7 +23,6 @@ class MovieController {
           .with('room')
       }
     })
-
     return response.json(cinema);
   }
 

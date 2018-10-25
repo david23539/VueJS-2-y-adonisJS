@@ -18,20 +18,18 @@ const state = {
 const actions = {
   [types.actions.fetchMovies]: ({commit}, cinemaId) => {
     commit(globalTypes.mutations.startProcessing);
-    return new Promise((resolve, reject) => {
-      Vue.http.get(`movies/${cinemaId}/byCinema`)
-        .then( movies => {
-          commit(types.mutations.receivedMovie, {apiResponse: movies})
-        })
-        .finally(() => {
-          commit(globalTypes.mutations.stopProcessing)
-        })
-    })
+    Vue.http.get(`movies/${cinemaId}/byCinema`)
+      .then( movies => {
+        commit(types.mutations.receivedMovies, {apiResponse: movies.body})
+      })
+      .finally(() => {
+        commit(globalTypes.mutations.stopProcessing)
+      })
   },
   [types.actions.fetchGenres]: ({commit}) => {
     commit(globalTypes.mutations.startProcessing);
     Vue.http.get('genres').then(genres => {
-      commit(types.mutations.receivedGenres, {apiResponse: genres})
+      commit(types.mutations.receivedGenres, {apiResponse: genres.body})
     })
       .finally(() => {
         commit(globalTypes.mutations.stopProcessing);
@@ -55,13 +53,13 @@ const getters = {
 
     if(state.query.hour){
       movies = movies.filter(movie => movie.movie_showing_times.some(movie_showing_times => {
-        const arrayHours = movie_showing_times.hour_to_show-split(':');
-        return parseInt(arrayHours[0]) === state.query.hour;
+        const arrayHours = movie_showing_times.hour_to_show.split(':');
+        return parseInt(arrayHours[0]) === state.query.hour.val;
       }))
     }
 
     if(state.query.genre){
-      movies = movies.filter(movie => movie.movie.genres.some(genre => genre.pivot.genre_id === state.query.genre)
+      movies = movies.filter(movie => movie.movie.genres.some(genre => genre.pivot.genre_id === state.query.genre))
     }
     return movies;
   },
@@ -74,28 +72,29 @@ const getters = {
 };
 
 const mutations = {
-  [types.mutations.receivedMovie]: (state, {apiResponse}) =>{
-   state.cinemaInfo = apiResponse.data;
+  [types.mutations.receivedMovies]: (state, {apiResponse}) =>{
+    console.log(apiResponse);
+    state.cinemaInfo = apiResponse;
   },
   [types.mutations.receivedGenres]: (state, {apiResponse}) => {
-   state.generes = apiResponse.data;
+   state.generes = apiResponse;
   },
-  [type.mutations.setSearch]: (state, query) =>{
+  [types.mutations.setSearch]: (state, query) =>{
     state.query.search = query
   },
-  [type.mutations.setGenre]: (state, query) =>{
+  [types.mutations.setGenre]: (state, query) =>{
     state.query.genere = query
   },
-  [type.mutations.setSeat]: (state, query) =>{
+  [types.mutations.setSeat]: (state, query) =>{
     state.query.seats = query
   },
-  [type.mutations.setRow]: (state, query) =>{
+  [types.mutations.setRow]: (state, query) =>{
     state.query.rows = query
   },
-  [type.mutations.setHour]: (state, query) =>{
+  [types.mutations.setHour]: (state, query) =>{
     state.query.hour = query
   },
-  [type.mutations.clearFilter]: (state, query) =>{
+  [types.mutations.clearFilters]: (state, query) =>{
     state.query = {
       search: '',
       rows:null,
